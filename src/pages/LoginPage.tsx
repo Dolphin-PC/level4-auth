@@ -28,15 +28,21 @@ const LoginPage = () => {
 
   return (
     <div>
+      <h1>로그인</h1>
       <form onSubmit={handleLogin}>
-        <input type="text" name="id" placeholder="아이디" />
-        <input type="password" name="password" placeholder="비밀번호" />
+        <input type="text" name="id" placeholder="아이디" defaultValue="test" />
+        <input
+          type="password"
+          name="password"
+          placeholder="비밀번호"
+          defaultValue="test"
+        />
 
-        <button type="button">
-          <Link to="/register">회원가입</Link>
-        </button>
         <button>로그인</button>
       </form>
+      <Link to="/register">
+        <button type="button">회원가입하러 가기</button>
+      </Link>
     </div>
   );
 };
