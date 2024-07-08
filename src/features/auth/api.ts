@@ -25,3 +25,17 @@ export const fetchRegister = async ({
 }: RegisterReq): Promise<void> => {
   await api.post("/register", { id, password });
 };
+
+interface ConfirmAuthRes {
+  message: string;
+}
+export const fetchConfirmAuth = async (
+  token: string
+): Promise<ConfirmAuthRes> => {
+  const response = await api.get("/user", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return response.data;
+};

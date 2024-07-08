@@ -1,11 +1,10 @@
 import { FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { fetchLogin } from "../features/auth/api";
-import { useSetRecoilState } from "recoil";
-import { tokenState } from "../features/auth/atom";
+import useAuth from "../features/auth/useAuth";
 
 const LoginPage = () => {
-  const setTokenState = useSetRecoilState(tokenState);
+  const auth = useAuth();
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
@@ -20,7 +19,7 @@ const LoginPage = () => {
     fetchLogin({ id: id.toString(), password: password.toString() }).then(
       (res) => {
         if (res && res.token) {
-          setTokenState(res.token);
+          auth.handleLogin(res.token);
         }
       }
     );

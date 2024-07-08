@@ -5,6 +5,7 @@ import ResiterPage from "./pages/ResiterPage";
 import AuthPage from "./pages/AuthPage";
 import { RecoilRoot } from "recoil";
 import PrivateRoute from "./components/templates/PrivateRoute";
+import TestAuthPage from "./pages/TestAuthPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           </Route>
           <Route element={<PrivateRoute isAuth={true} />}>
             <Route path="/auth" element={<AuthPage />} />
+            <Route path="/test-auth" element={<TestAuthPage />} />
           </Route>
         </Routes>
       </RecoilRoot>

@@ -1,8 +1,10 @@
 import React, { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchRegister } from "../features/auth/api";
 
 const ResiterPage = () => {
+  const navigate = useNavigate();
+
   const handleRegister = (e: FormEvent) => {
     e.preventDefault();
 
@@ -16,6 +18,7 @@ const ResiterPage = () => {
     fetchRegister({ id: id.toString(), password: password.toString() }).then(
       () => {
         alert("회원가입이 완료되었습니다.");
+        navigate("/");
       }
     );
   };
