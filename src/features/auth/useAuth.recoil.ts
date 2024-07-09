@@ -1,6 +1,6 @@
 import { useRecoilState } from "recoil";
-import { tokenExpireState, tokenState } from "./atom";
-import { fetchConfirmAuth } from "./api";
+import { tokenExpireState, tokenState } from "./auth.atom";
+import { fetchConfirmAuth } from "./auth.api";
 
 const useAuth = () => {
   const [token, setToken] = useRecoilState(tokenState);

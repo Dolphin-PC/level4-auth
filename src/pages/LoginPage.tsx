@@ -1,28 +1,24 @@
 import { FormEvent } from "react";
 import { Link } from "react-router-dom";
-import { fetchLogin } from "../features/auth/api";
-import useAuth from "../features/auth/useAuth";
+
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../redux/store";
+import { __login } from "../features/auth/auth.slice.thunk";
 
 const LoginPage = () => {
-  const auth = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleLogin = (e: FormEvent) => {
     e.preventDefault();
 
     // FormData
     const formData = new FormData(e.target as HTMLFormElement);
-    const id = formData.get("id"); // '아이디' 입력 필드의 name 속성이 'username'이라고 가정
-    const password = formData.get("password"); // '비밀번호' 입력 필드의 name 속성이 'password'라고 가정
+    const id = formData.get("id")?.toString(); // '아이디' 입력 필드의 name 속성이 'username'이라고 가정
+    const password = formData.get("password")?.toString(); // '비밀번호' 입력 필드의 name 속성이 'password'라고 가정
 
     if (!id || !password) return alert("아이디와 비밀번호를 입력해주세요.");
 
-    fetchLogin({ id: id.toString(), password: password.toString() }).then(
-      (res) => {
-        if (res && res.token) {
-          auth.handleLogin(res.token);
-        }
-      }
-    );
+    dispatch(__login({ id, password }));
   };
 
   return (
