@@ -64,11 +64,19 @@ const PrivateRoute = ({ isAuth }: Props) => {
 
   const BackNavigate = (): ReactNode => {
     const navigate = useNavigate();
+    const hasNavigated = useRef(false);
 
     useEffect(() => {
-      navigate(-1);
+      // 컴포넌트가 마운트된 후에만 navigate(-1)을 호출
+      if (hasNavigated.current) {
+        navigate(-1);
+      } else {
+        // 첫 마운트 시에는 hasNavigated를 true로 설정하여, 다음부터 navigate(-1) 가능
+        hasNavigated.current = true;
+      }
     }, []);
-    return <></>;
+
+    return <Navigate to="/auth" />;
   };
 
   //* 인증 필요 페이지
