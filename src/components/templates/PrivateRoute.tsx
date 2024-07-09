@@ -1,6 +1,7 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { ReactNode, useEffect, useRef } from "react";
-import useAuth from "../../features/auth/useAuth";
+import { Navigate, Outlet } from "react-router-dom";
+import useAuth from "@/features/auth/useAuth";
+import BackNavigate from "@/components/atoms/BackNavigate";
+import AuthOutlet from "@/components/organisms/AuthOutlet";
 
 interface Props {
   /** true:인증, false:인증불필요 */
@@ -8,76 +9,7 @@ interface Props {
 }
 
 const PrivateRoute = ({ isAuth }: Props) => {
-  const {
-    token,
-    tokenExpire,
-    handleLogout,
-    handleConfirmAuth,
-    handleTokenExpire,
-  } = useAuth();
-
-  const expiredTimerRef = useRef<number | null>(null);
-
-  useEffect(() => {
-    //* 토큰 만료 테스트용
-    const startExpiredTimer = () => {
-      expiredTimerRef.current = setTimeout(() => {
-        alert("토큰 정보가 만료되었습니다. 다시 로그인해주세요.");
-        handleLogout();
-      }, 3000);
-    };
-
-    const stopExpiredTimer = () => {
-      if (expiredTimerRef.current) clearTimeout(expiredTimerRef.current);
-    };
-
-    if (!tokenExpire) return;
-
-    tokenExpire.isExpire ? startExpiredTimer() : stopExpiredTimer();
-
-    return () => {
-      stopExpiredTimer();
-    };
-  }, [tokenExpire]);
-
-  const AuthOutlet = (): ReactNode => {
-    if (!tokenExpire) return null;
-    return (
-      <>
-        <Outlet />
-        <hr />
-        <h3>토큰 정보</h3>
-        <p>만료시간 : {String(new Date(tokenExpire.tokenExpireTime))}</p>
-        <p>만료여부 : {String(tokenExpire.isExpire)}</p>
-        {tokenExpire.isExpire && (
-          <p>
-            토큰이 만료되었습니다.
-            <br /> (3초 후, 재로그인 alert가 표시됩니다.)
-          </p>
-        )}
-        <button onClick={handleConfirmAuth}>사용자 인증확인</button>
-        <button onClick={handleTokenExpire}>토큰 만료시키기</button>
-        <button onClick={handleLogout}>로그아웃</button>
-      </>
-    );
-  };
-
-  const BackNavigate = (): ReactNode => {
-    const navigate = useNavigate();
-    const hasNavigated = useRef(false);
-
-    useEffect(() => {
-      // 컴포넌트가 마운트된 후에만 navigate(-1)을 호출
-      if (hasNavigated.current) {
-        navigate(-1);
-      } else {
-        // 첫 마운트 시에는 hasNavigated를 true로 설정하여, 다음부터 navigate(-1) 가능
-        hasNavigated.current = true;
-      }
-    }, []);
-
-    return <Navigate to="/auth" />;
-  };
+  const { token } = useAuth();
 
   //* 인증 필요 페이지
   if (isAuth) {

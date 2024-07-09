@@ -1,10 +1,12 @@
 import { useRecoilState } from "recoil";
 import { tokenExpireState, tokenState } from "./atom";
 import { fetchConfirmAuth } from "./api";
+import { useEffect, useRef } from "react";
 
 const useAuth = () => {
   const [token, setToken] = useRecoilState(tokenState);
   const [tokenExpire, setTokenExpire] = useRecoilState(tokenExpireState);
+  const expiredTimerRef = useRef<number | null>(null);
 
   /** 로그인처리 - token 및 만료정보 저장 */
   const handleLogin = (token: string) => {
@@ -53,6 +55,28 @@ const useAuth = () => {
       isExpire: true,
     });
   };
+
+  useEffect(() => {
+    //* 토큰 만료 테스트용
+    const startExpiredTimer = () => {
+      expiredTimerRef.current = setTimeout(() => {
+        alert("토큰 정보가 만료되었습니다. 다시 로그인해주세요.");
+        handleLogout();
+      }, 3000);
+    };
+
+    const stopExpiredTimer = () => {
+      if (expiredTimerRef.current) clearTimeout(expiredTimerRef.current);
+    };
+
+    if (!tokenExpire) return;
+
+    tokenExpire.isExpire ? startExpiredTimer() : stopExpiredTimer();
+
+    return () => {
+      stopExpiredTimer();
+    };
+  }, [tokenExpire]);
 
   return {
     token,

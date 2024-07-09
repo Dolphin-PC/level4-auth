@@ -1,4 +1,4 @@
-import api from "../../common/axios";
+import api from "@/common/axios";
 
 interface LoginReq {
   id: string;
