@@ -11,8 +11,8 @@ const LoginPage = () => {
 
     // FormData
     const formData = new FormData(e.target as HTMLFormElement);
-    const id = formData.get("id"); // '아이디' 입력 필드의 name 속성이 'username'이라고 가정
-    const password = formData.get("password"); // '비밀번호' 입력 필드의 name 속성이 'password'라고 가정
+    const id = formData.get("id");
+    const password = formData.get("password");
 
     if (!id || !password) return alert("아이디와 비밀번호를 입력해주세요.");
 

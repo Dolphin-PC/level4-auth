@@ -77,7 +77,6 @@ const PrivateRoute = ({ isAuth }: Props) => {
   }
 
   //* 인증 불필요 페이지
-  //FIXME 이전 페이지로 이동하는 코드 작성 필요
   return token ? <Back /> : <Outlet />;
 };
 
