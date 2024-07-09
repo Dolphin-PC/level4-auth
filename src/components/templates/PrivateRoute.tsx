@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { ReactNode, useEffect, useRef } from "react";
 import useAuth from "../../features/auth/useAuth";
 
@@ -62,6 +62,15 @@ const PrivateRoute = ({ isAuth }: Props) => {
     );
   };
 
+  const Back = (): ReactNode => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      navigate(-1);
+    }, []);
+    return <></>;
+  };
+
   //* 인증 필요 페이지
   if (isAuth) {
     return token ? <AuthOutlet /> : <Navigate to="/" />;
@@ -69,7 +78,7 @@ const PrivateRoute = ({ isAuth }: Props) => {
 
   //* 인증 불필요 페이지
   //FIXME 이전 페이지로 이동하는 코드 작성 필요
-  return token ? <Navigate to="/auth" /> : <Outlet />;
+  return token ? <Back /> : <Outlet />;
 };
 
 export default PrivateRoute;
