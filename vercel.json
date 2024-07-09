@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "@VITE_API_URL/:path*"
+      "destination": "http://3.38.191.164/:path*"
     },
     {
       "source": "/api/:path*/",
-      "destination": "@VITE_API_URL/:path*/"
+      "destination": "http://3.38.191.164/:path*/"
     },
     { "source": "/(.*)", "destination": "/" }
   ]
