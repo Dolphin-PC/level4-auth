@@ -1,4 +1,4 @@
-import React, { FormEvent } from "react";
+import { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchRegister } from "../features/auth/auth.api";
 
