@@ -1,7 +1,8 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import useAuth from "../../features/auth/useAuth.redux";
 import { logout } from "../../features/auth/auth.slice";
 import { useDispatch } from "react-redux";
+import { ReactNode, useEffect } from "react";
 
 interface Props {
   /** true:인증, false:인증불필요 */
@@ -14,7 +15,7 @@ const PrivateRoute = ({ isNeedAuth }: Props) => {
 
   const dispatch = useDispatch();
 
-  const AuthOutlet = () => {
+  const AuthOutlet = (): ReactNode => {
     return (
       <>
         <p>만료시간 : {new Date(token.data.expiredAt!).toTimeString()}</p>
@@ -27,6 +28,15 @@ const PrivateRoute = ({ isNeedAuth }: Props) => {
     );
   };
 
+  const BackNavigate = (): ReactNode => {
+    const navigate = useNavigate();
+    useEffect(() => {
+      navigate(-1);
+    }, []);
+
+    return <></>;
+  };
+
   //* 인증 필요 페이지
   if (isNeedAuth) {
     return isAuth ? <AuthOutlet /> : <Navigate to="/" />;
@@ -34,7 +44,7 @@ const PrivateRoute = ({ isNeedAuth }: Props) => {
 
   //* 인증 불필요 페이지
   //FIXME 이전 페이지로 이동하는 코드 작성 필요
-  return isAuth ? <Navigate to="/auth" /> : <Outlet />;
+  return isAuth ? <BackNavigate /> : <Outlet />;
 };
 
 export default PrivateRoute;
