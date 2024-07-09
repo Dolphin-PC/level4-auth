@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 const useAuth = () => {
   const [token, setToken] = useRecoilState(tokenState);
   const [tokenExpire, setTokenExpire] = useRecoilState(tokenExpireState);
-  const expiredTimerRef = useRef<number | null>(null);
+  const expiredTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   /** 로그인처리 - token 및 만료정보 저장 */
   const handleLogin = (token: string) => {
