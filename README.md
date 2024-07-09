@@ -217,6 +217,12 @@ const LoginPage = () => {
 
 </details>
 
+## 💥 Trouble Shooting
+
+#### Mixed-Content : https -> http
+
+- proxy설정으로 해결하려 시도해봤으나, `production`에서는 실행이 되지 않음
+
 ## 프로젝트 환경
 
 - ⚙️ React, Vite, yarn
