@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { ReactNode, useEffect, useRef } from "react";
 import useAuth from "../../features/auth/useAuth";
 
@@ -62,14 +62,14 @@ const PrivateRoute = ({ isAuth }: Props) => {
     );
   };
 
-  const Back = (): ReactNode => {
-    const navigate = useNavigate();
+  // const Back = (): ReactNode => {
+  //   const navigate = useNavigate();
 
-    useEffect(() => {
-      navigate(-1);
-    }, []);
-    return <></>;
-  };
+  //   useEffect(() => {
+  //     navigate(-1);
+  //   }, []);
+  //   return <></>;
+  // };
 
   //* 인증 필요 페이지
   if (isAuth) {
@@ -77,7 +77,7 @@ const PrivateRoute = ({ isAuth }: Props) => {
   }
 
   //* 인증 불필요 페이지
-  return token ? <Back /> : <Outlet />;
+  return token ? <Navigate to="/auth" /> : <Outlet />;
 };
 
 export default PrivateRoute;
